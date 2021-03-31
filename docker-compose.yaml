@@ -1,0 +1,41 @@
+version: '3'  
+services:
+  gocd-server:
+    container_name: "gocd-server"
+    image: gocd/gocd-server:v21.2.0
+    restart: always
+    ports:
+      - "8153:8153"
+    volumes:
+      - godata:/godata
+  gocd-agent0:
+    container_name: "gocd-agent0"
+    image: gocd/gocd-agent-alpine-3.13:v21.2.0
+    restart: always
+    depends_on:
+      - "gocd-server"
+    environment:
+      - GO_SERVER_URL=http://192.168.178.117:8153/go
+      - AGENT_AUTO_REGISTER_KEY=7fc56846-74b7-48dc-8038-cace36ac0e0e
+  gocd-agent1:
+    container_name: "gocd-agent1"
+    image: gocd/gocd-agent-alpine-3.13:v21.2.0
+    restart: always
+    depends_on:
+      - "gocd-server"
+    environment:
+      - GO_SERVER_URL=http://192.168.178.117:8153/go
+      - AGENT_AUTO_REGISTER_KEY=7fc56846-74b7-48dc-8038-cace36ac0e0e
+  gocd-agent2:
+    container_name: "gocd-agent2"
+    image: gocd/gocd-agent-alpine-3.13:v21.2.0
+    restart: always
+    depends_on:
+      - "gocd-server"
+    environment:
+      - GO_SERVER_URL=http://192.168.178.117:8153/go
+      - AGENT_AUTO_REGISTER_KEY=7fc56846-74b7-48dc-8038-cace36ac0e0e
+
+volumes:
+  godata:
+
